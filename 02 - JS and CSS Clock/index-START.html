@@ -54,7 +54,7 @@
       position: relative;
       width: 100%;
       height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
+      transform: translateY(-3px) rotate(90deg); /* account for the height of the clock hands */
     }
 
     .hand {
@@ -63,12 +63,59 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: right;
     }
 
   </style>
 
   <script>
+    // Dom Selection
+    const secondHand = document.querySelector('.second-hand');
+    console.log('I am the second hand', secondHand);
+    const minuteHand = document.querySelector('.min-hand');
+    console.log('I am the minute hand', minuteHand);
+    const hourHand = document.querySelector('.hour-hand');
+    console.log('I am the hour hand', hourHand);
 
+    // Manipulate hands based on hours, minutes, seconds
+    secondHand.style.transform = "rotate(120deg)";
+
+    // Maybe some fun angle math (for rotation) - animation
+
+    // 30* per hour
+    const setHours = (hour) => {
+      const degrees = hour * 30;
+      hourHand.style.transform = `rotate(${degrees}deg)`;
+    };
+
+    // 6* per minute/second
+    const setMinutes = (minute) => {
+      const degrees = minute * 6;
+      minuteHand.style.transform = `rotate(${degrees}deg)`;
+    }
+
+    const setSeconds = (second) => {
+      const degrees = second * 6;
+      secondHand.style.transform = `rotate(${degrees}deg)`;
+    }
+
+    // Set Interval, for delay of 1000ms = 1 second
+    setInterval(() => {
+      // Get the current Date object: hours, minutes, seconds
+      const date = new Date();
+
+      const seconds = date.getSeconds();
+      console.log('I am seconds', seconds);
+      setSeconds(seconds);
+
+      const minutes = date.getMinutes();
+      console.log('I am minutes', minutes);
+      setMinutes(minutes);
+
+      const hours = date.getHours();
+      console.log('I am hours', hours);
+      setHours(hours);
+    }, 1000);
 
   </script>
 </body>
