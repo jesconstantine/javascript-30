@@ -60,6 +60,30 @@
 
 <script>
 
+  // Loop through .key, set up a variable (let or const)
+
+  // we need an event listener
+  function playSound (event) {
+    // event.keyCode = .key[data-key]
+    const divForKeyThatWasPressed = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+    const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+    audio.play();
+    divForKeyThatWasPressed.classList.add("playing");
+  };
+
+  // we need to undo the things after
+  //   document.addEventListener("transitionend", (event) => {
+  function removeTransition (event) {
+    console.log(event);
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  };
+
+
+  const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener("keydown", playSound);
+
 </script>
 
 
